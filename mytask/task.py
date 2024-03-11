@@ -34,7 +34,6 @@ def csvRead(self):
         print(json_result)
         return json_result
     except FileNotFoundError as e:
-        # Log the error for debugging
         print(f"File not found error: {e}")
 
 

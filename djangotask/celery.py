@@ -19,4 +19,5 @@ app.autodiscover_tasks()
 def debug_task(self):  
     print(f'Request: {self.request!r}')  
 
-# celery -A djangotask.celery worker --loglevel=info -n worker1 -Q worker1_queue
+# celery -A djangotask flower
+# celery -A djangotask.celery worker -P eventlet -l INFO

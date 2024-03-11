@@ -9,6 +9,11 @@ from django.http import JsonResponse
 from djangotask.celery import app
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.shortcuts import render
+
+def index(request):
+    context = {'name': 'World'}
+    return render(request, 'index.html', context)
 
 # API endpoint http://127.0.0.1:8000/api/task/
 class TaskView(APIView):
@@ -45,17 +50,11 @@ def hello(request):
             # Get the JSON data from the request body
             data = json.loads(request.body)
             name = data.get('name', '')
-
-            # Apply the task asynchronously
-            task = app.tasks.get(name)
-            print(task)
-            task_result = task.apply_async()
-            print(task_result)
-            # Wait for the task to complete and get the result
-            # task_result_value = task_result.get()
-
-            # Respond with the task result
-            response_data = {'output': "task_result_value"}
+            # task = app.tasks.get(name)
+            # print(task)
+            # task_result = task.apply_async()
+            # print(task_result)
+            response_data = {'output': name}
             return JsonResponse(response_data)
         except json.JSONDecodeError as e:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
